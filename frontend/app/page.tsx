@@ -18,7 +18,7 @@ export default function Home() {
     formData.append("file", file);
 
     try {
-      const response = await fetch("http://localhost:5000/api/upload", {
+      const response = await fetch("https://groweasy-backend-doiv.onrender.com/api/upload", {
         method: "POST",
         body: formData,
       });
@@ -47,7 +47,7 @@ export default function Home() {
     setLoading(true);
 
     try {
-      const response = await fetch("http://localhost:5000/api/import", {
+      const response = await fetch("https://groweasy-backend-doiv.onrender.com/api/import", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

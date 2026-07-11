@@ -7,6 +7,7 @@ export default function Home() {
   const [preview, setPreview] = useState<any[]>([]);
   const [crmData, setCrmData] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
+  const [importStats, setImportStats] = useState<{ total: number; imported: number; skipped: number } | null>(null);
 
   const uploadCSV = async () => {
     if (!file) {
@@ -31,6 +32,8 @@ export default function Home() {
       }
 
       setPreview(data.preview);
+      setCrmData([]);
+      setImportStats(null);
       alert("CSV uploaded successfully!");
     } catch (error) {
       console.error(error);
@@ -65,6 +68,11 @@ export default function Home() {
       }
 
       setCrmData(data.data);
+      setImportStats({
+        total: data.totalRecords,
+        imported: data.totalImported,
+        skipped: data.totalSkipped,
+      });
       alert("Import completed successfully!");
     } catch (error) {
       console.error(error);
@@ -151,6 +159,14 @@ export default function Home() {
         <h2 className="text-2xl font-semibold mb-4">
           CRM Results
         </h2>
+
+        {importStats && (
+          <div className="mb-4 flex gap-6 text-sm">
+            <span><strong>Total Records:</strong> {importStats.total}</span>
+            <span className="text-green-700"><strong>Imported:</strong> {importStats.imported}</span>
+            <span className="text-red-700"><strong>Skipped:</strong> {importStats.skipped}</span>
+          </div>
+        )}
 
         {crmData.length === 0 ? (
           <p>No CRM data yet.</p>
